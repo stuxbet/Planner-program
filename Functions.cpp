@@ -25,17 +25,42 @@ bool mainMenu() {
 
     switch (userInputchar) {
     case 'A':
-        cout << "You selected option 1." << endl;
+
+        cout << "You selected Add Task." << endl;
+        cout << "Please enter task Name/Title" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, title);
+
+        cout << "Please enter task discription" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, description);
+
+        cout << "Please enter the day of the week that you will complete the task" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, DOW);
+
+        cout << "Please enter start time of task" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, ST);
+        cout << "Please enter End time of task" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, ET);       
+
         addTaskToList(DOW,title, description, ST, ET);
 
         return true;
 
     case 'D':
-        cout << "You selected option 2." << endl;
+        cout << "You selected Add Task." << endl;
+        cout << "Please enter task Name/Title to delete" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, title);
+        deleteTask(title);
         return true;
 
     case 'P':
-        cout << "You selected option 3." << endl;
+        void printItenerary();
+
         return true;
 
     case 'H':
@@ -89,7 +114,3 @@ void Help() {
     cout << "Once you are done press P on the main menu and it will create a txt " << endl;
     cout << "file that you can print off" << endl<<endl<<endl;
 }
-
-
-
-
