@@ -1,9 +1,12 @@
 #include "Functions.h"
 #include <iostream>
 #include <string>
+#include <vector>
+#include "linkedList.h"
+
 using namespace std;
 
-bool mainMenu() {
+bool mainMenu(vector<Linked> days) {
 	char userInputchar = 'l';
 	string userInput;
 	cout << "Please select from one of the following" << endl << endl;
@@ -46,7 +49,7 @@ bool mainMenu() {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, ET);       
 
-        addTaskToList(DOW,title, description, ST, ET);
+        addTaskToList(days, DOW,title, description, ST, ET);
 
         return true;
 
@@ -55,11 +58,11 @@ bool mainMenu() {
         cout << "Please enter task Name/Title to delete" << endl;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, title);
-        deleteTask(title);
+        deleteTask(days,title);
         return true;
 
     case 'P':
-        void printItenerary();
+        printItenerary(days);
 
         return true;
 
@@ -78,7 +81,7 @@ bool mainMenu() {
 
 
 }
-void addTaskToList(string DOW,string title, string description, string ST, string ET) {
+void addTaskToList(vector<Linked> days, string DOW,string title, string description, string ST, string ET) {
     /*pre: dow(Day of week),title , description, ST(start time), ET(end time) are all passed and
     post:this simply makes a instance of the taskclass class and adds it to the list. it also might check to see if there are overlapping events
     */
@@ -86,7 +89,7 @@ void addTaskToList(string DOW,string title, string description, string ST, strin
     return;
 
 }
-void deleteTask(string title) {
+void deleteTask(vector<Linked> days, string title) {
     /*
     Pre: task title is passed
     post: deletes task from one of the given linked lists
@@ -94,7 +97,7 @@ void deleteTask(string title) {
     int x = 0;
     return;
 }
-void printItenerary() {
+void printItenerary(vector<Linked> days) {
     /*
     Pre:not entirely sure up to who write the function as to how they get the lists to the function
     Post: write a well formatted week itenerary to a designated outfile
