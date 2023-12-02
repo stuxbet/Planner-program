@@ -31,18 +31,14 @@ bool mainMenu(vector<Linked>& days) {
         getline(cin, title);
 
         cout << "Please enter task discription" << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, description);
 
         cout << "Please enter the day of the week that you will complete the task" << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, DOW);
 
         cout << "Please enter start time of task (Enter in HH:MM format)" << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, ST);
         cout << "Please enter End time of task (Enter in HH:MM format)" << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, ET);       
 
         addTaskToList(days, DOW, title, description, ST, ET);
@@ -52,9 +48,9 @@ bool mainMenu(vector<Linked>& days) {
     case 'D':
         cout << "You selected Delete Task." << endl;
         cout << "Please enter the day that the task is in" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, DOW);
         cout << "Please enter task Name/Title to delete" << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, title);
         deleteTask(days, DOW, title);
         return true;
