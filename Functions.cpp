@@ -51,10 +51,12 @@ bool mainMenu(vector<Linked>& days) {
 
     case 'D':
         cout << "You selected Delete Task." << endl;
+        cout << "Please enter the day that the task is in" << endl;
+        getline(cin, DOW);
         cout << "Please enter task Name/Title to delete" << endl;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, title);
-        deleteTask(days, title);
+        deleteTask(days, DOW, title);
         return true;
 
     case 'P':
@@ -77,29 +79,6 @@ bool mainMenu(vector<Linked>& days) {
 
 
 }
-int dayToIterator(string DOW) {
-    switch (tolower(DOW.at(0))) {
-    case 'm':
-        return 0;
-    case 't':
-        if (tolower(DOW.at(1)) == 'u')
-            return 1;
-        else
-            return 3;
-    case 'w':
-        return 2;
-    case 'f':
-        return 4;
-    case 's':
-        if (tolower(DOW.at(1)) == 'a')
-            return 5;
-        else
-            return 6;
-    default:
-        cout << "Invalid Day";
-        return -1;
-    }
-}
 void addTaskToList(vector<Linked>& days, string DOW, string title, string description, string ST, string ET) {
     /*pre: dow(Day of week), title, description, ST(start time), ET(end time) are all passed and
     post:this simply makes a instance of the taskclass class and adds it to the list. it also might check to see if there are overlapping events
@@ -109,11 +88,12 @@ void addTaskToList(vector<Linked>& days, string DOW, string title, string descri
     return;
 
 }
-void deleteTask(vector<Linked>& days, string title) {
+void deleteTask(vector<Linked>& days, string DOW, string title) {
     /*
     Pre: task title is passed
     post: deletes task from one of the given linked lists
     */
+    days.at(dayToIterator(DOW)).delNode(title);
     int x = 0;
     return;
 }
@@ -136,4 +116,28 @@ void Help() {
     cout << "and entering the title of the task. " << endl<<endl;
     cout << "Once you are done press P on the main menu and it will create a txt " << endl;
     cout << "file that you can print off" << endl<<endl<<endl;
+}
+
+int dayToIterator(string DOW) {
+    switch (tolower(DOW.at(0))) {
+    case 'm':
+        return 0;
+    case 't':
+        if (tolower(DOW.at(1)) == 'u')
+            return 1;
+        else
+            return 3;
+    case 'w':
+        return 2;
+    case 'f':
+        return 4;
+    case 's':
+        if (tolower(DOW.at(1)) == 'a')
+            return 5;
+        else
+            return 6;
+    default:
+        cout << "Invalid Day";
+        return -1;
+    }
 }
