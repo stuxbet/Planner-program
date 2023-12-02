@@ -21,7 +21,7 @@
     <ClCompile Include="taskClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="linkedListDay.cpp">
+    <ClCompile Include="linkedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Functions.cpp">
@@ -32,7 +32,7 @@
     <ClInclude Include="taskClass.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="linkedListDay.h">
+    <ClInclude Include="linkedList.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Functions.h">

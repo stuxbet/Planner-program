@@ -1,6 +1,4 @@
 #pragma once
-#include <string>
-#include <iostream>
 #include "taskClass.h"
 using namespace std;
 

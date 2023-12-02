@@ -1,8 +1,4 @@
-#include <iostream>
 #include "Functions.h"
-#include "linkedList.h"
-#include <vector>
-using namespace std;
 
 int main()
 {

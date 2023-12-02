@@ -1,12 +1,8 @@
 #include "Functions.h"
-#include <iostream>
-#include <string>
-#include <vector>
-#include "linkedList.h"
 
 using namespace std;
 
-bool mainMenu(vector<Linked> days) {
+bool mainMenu(vector<Linked>& days) {
 	char userInputchar = 'l';
 	string userInput;
 	cout << "Please select from one of the following" << endl << endl;
@@ -42,23 +38,23 @@ bool mainMenu(vector<Linked> days) {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, DOW);
 
-        cout << "Please enter start time of task" << endl;
+        cout << "Please enter start time of task (Enter in HH:MM format)" << endl;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, ST);
-        cout << "Please enter End time of task" << endl;
+        cout << "Please enter End time of task (Enter in HH:MM format)" << endl;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, ET);       
 
-        addTaskToList(days, DOW,title, description, ST, ET);
+        addTaskToList(days, DOW, title, description, ST, ET);
 
         return true;
 
     case 'D':
-        cout << "You selected Add Task." << endl;
+        cout << "You selected Delete Task." << endl;
         cout << "Please enter task Name/Title to delete" << endl;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, title);
-        deleteTask(days,title);
+        deleteTask(days, title);
         return true;
 
     case 'P':
@@ -81,15 +77,39 @@ bool mainMenu(vector<Linked> days) {
 
 
 }
-void addTaskToList(vector<Linked> days, string DOW,string title, string description, string ST, string ET) {
-    /*pre: dow(Day of week),title , description, ST(start time), ET(end time) are all passed and
+int dayToIterator(string DOW) {
+    switch (tolower(DOW.at(0))) {
+    case 'm':
+        return 0;
+    case 't':
+        if (tolower(DOW.at(1)) == 'u')
+            return 1;
+        else
+            return 3;
+    case 'w':
+        return 2;
+    case 'f':
+        return 4;
+    case 's':
+        if (tolower(DOW.at(1)) == 'a')
+            return 5;
+        else
+            return 6;
+    default:
+        cout << "Invalid Day";
+        return -1;
+    }
+}
+void addTaskToList(vector<Linked>& days, string DOW, string title, string description, string ST, string ET) {
+    /*pre: dow(Day of week), title, description, ST(start time), ET(end time) are all passed and
     post:this simply makes a instance of the taskclass class and adds it to the list. it also might check to see if there are overlapping events
     */
-    int x = 0;
+    Task newTask = Task(title, description, ST, ET, 0);
+    days.at(dayToIterator(DOW)).addNode(newTask);
     return;
 
 }
-void deleteTask(vector<Linked> days, string title) {
+void deleteTask(vector<Linked>& days, string title) {
     /*
     Pre: task title is passed
     post: deletes task from one of the given linked lists
@@ -97,7 +117,7 @@ void deleteTask(vector<Linked> days, string title) {
     int x = 0;
     return;
 }
-void printItenerary(vector<Linked> days) {
+void printItenerary(vector<Linked>& days) {
     /*
     Pre:not entirely sure up to who write the function as to how they get the lists to the function
     Post: write a well formatted week itenerary to a designated outfile
