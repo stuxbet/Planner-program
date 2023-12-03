@@ -133,7 +133,8 @@ int dayToIterator(string DOW) {
         else
             return 6;
     default:
-        cout << "Invalid Day";
-        return -1;
+        cout << "Invalid day. Please enter a day of the week" << endl;
+        cin >> DOW;
+        return dayToIterator(DOW);
     }
 }
