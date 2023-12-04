@@ -7,6 +7,7 @@ bool mainMenu(vector<Linked>& days) {
 	char userInput;
 	cout << "Please select from one of the following: " << endl << endl;
 	cout << "Enter A to add a Task" << endl;
+    cout << "Enter V to view your tasks by day" << endl;
 	cout << "Enter D to Delete/Complete a Task" << endl;
 	cout << "Enter P to Print your planner for the week" << endl;
     cout << "Enter H for help using this program" << endl;
@@ -16,7 +17,7 @@ bool mainMenu(vector<Linked>& days) {
     userInput = toupper(userInput);
 
     
-    //placeholder vaiables
+    //placeholder variables
     string DOW;
     string description;
     string ST;
@@ -91,6 +92,15 @@ bool mainMenu(vector<Linked>& days) {
                 getline(cin, title);
                 days.at(dayChoice-1).delNode(title);
             }
+            return true;
+        case 'V':
+            cout << "(Enter the corresponding number to select that day):" << endl;
+            cout << "1.) Monday\n2.) Tuesday\n3.) Wednesday\n4.) Thursday\n5.) Friday\n6.) Saturday\n7.) Sunday" << endl;
+            cout << "Please choose a day: "; cin >> dayChoice;
+            if(days.at(dayChoice-1).isEmpty())
+                cout << "\nYou have no active tasks for the selected day." << endl;
+            else
+                days.at(dayChoice-1).printList(dayChoice);
             return true;
         case 'H':
             Help();
