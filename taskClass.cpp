@@ -14,7 +14,7 @@ void Task::completeTask(){
     isCompleted = true;
 }
 
-void Task::setDueDate(int day, int mon, int year){
+void Task::setDueDate(int mon, int day, int year){
 
     time_t curr;
     this->dueDate = *localtime(&curr);
@@ -48,3 +48,4 @@ double Task::getTimeRemaining(){
 
     return timeLeft;
 }
+

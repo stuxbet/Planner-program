@@ -2,6 +2,8 @@
 #include <iostream>
 #include <ctime>
 #include <string>
+#include <iomanip>
+#include <sstream>
 
 using namespace std;
 
@@ -9,8 +11,12 @@ class Task{
 private:
     string taskName;
     string taskDescription;
-    bool isCompleted;
     tm dueDate;
+    string startTime;
+    string endTime;
+    int intStartTime;
+    int intEndTime;
+    bool isCompleted;
 public:
     void setTaskName(string);
     void setTaskDescription(string);
@@ -19,5 +25,10 @@ public:
     string getTaskName() {return taskName;}
     string getTaskDescription() {return taskDescription;}
     double getTimeRemaining();
+    tm getDueDate() { return dueDate;}
+    string getStartTime() { return startTime; }
+    string getEndTime() { return endTime; }
+    int getIntStartTime() { return intStartTime; }
+    int getIntEndTime() { return intEndTime; }
     bool getStatus() {return isCompleted;}
 };
