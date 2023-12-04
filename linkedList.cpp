@@ -17,24 +17,32 @@ void Linked::addNode(Task t) {
 void Linked::delNode(string name) {
     Node* tempNode = headPtr;
     Node* delNode;
+    bool found = false;
     if (tempNode != nullptr && upper(tempNode->task.getTaskName()) == upper(name)){
         headPtr = headPtr->nextPtr;
         delete tempNode;
         tempNode = nullptr;
+        found = true;
     }
     else{
         while(tempNode != nullptr && tempNode->nextPtr!=nullptr){
-            if (tempNode->nextPtr->task.getTaskName() == name){
+            if (upper(tempNode->nextPtr->task.getTaskName()) == upper(name)){
                 delNode = tempNode->nextPtr;
                 tempNode->nextPtr = tempNode->nextPtr->nextPtr;
                 if (tempNode->nextPtr == tailPtr )
                     tailPtr = tempNode;
                 delete delNode;
                 delNode = nullptr;
+                found = true;
             }
             tempNode = tempNode->nextPtr;
         }
+        if (!found)
+            cout << "\nCOMMAND FAILED: The task \"" << name << "\" was not found within your tasks for this day." << endl;
+        else
+            cout << "\nThe task \"" << name << "\" has been deleted/completed\n" << endl;
     }
+
 }
 
 bool Linked::isEmpty(){
@@ -96,6 +104,7 @@ void Linked::printList(int day) {
             cout << "|-------------------------------------------------------------------------------------|" << endl;
         }
         cout << endl;
+        num++;
         tempNode = tempNode->nextPtr;
     }
 }

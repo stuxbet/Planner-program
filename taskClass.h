@@ -18,6 +18,7 @@ private:
     int intEndTime;
     bool isCompleted;
 public:
+    Task();
     void setTaskName(string);
     void setTaskDescription(string);
     void setDueDate(int, int, int);

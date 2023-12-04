@@ -2,6 +2,20 @@
 
 using namespace std;
 
+Task::Task() {
+    taskName = "NAME";
+    taskDescription = "DESCRIPTION";
+    startTime = "00:00";
+    endTime = "00:00";
+    intStartTime = 0;
+    intEndTime = 0;
+    isCompleted = 0;
+    dueDate.tm_year = 0;
+    dueDate.tm_mon = 0;
+    dueDate.tm_mday = 0;
+
+}
+
 void Task::setTaskName(string name){
     taskName = name;
 }
