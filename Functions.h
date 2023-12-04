@@ -1,12 +1,11 @@
 #pragma once
 #include "linkedList.h"
-
+#include <vector>
 
 using namespace std;
 
-bool mainMenu(vector<Linked>& days);
-void addTaskToList(vector<Linked>& days, string DOW, string title, string description, string ST, string ET);
-void deleteTask(vector<Linked>& days, string DOW, string title);
-void printItenerary(vector<Linked>& days);
+bool mainMenu(vector<Linked>&);
+void printItinerary(vector<Linked>& days);
 void Help();
+string upper(string str);
 int dayToIterator(string DOW);

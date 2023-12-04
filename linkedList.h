@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <iostream>
 #include "taskClass.h"
 using namespace std;
 
@@ -12,9 +14,8 @@ private:
     Node* headPtr;
     Node* tailPtr;
 public:
-    Linked();
-    Linked(Task t);
     void addNode(Task t);
     void delNode(string name);
-    void printList();
+    void printList(int day);
+    bool isEmpty();
 };

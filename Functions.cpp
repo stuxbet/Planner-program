@@ -3,17 +3,18 @@
 using namespace std;
 
 bool mainMenu(vector<Linked>& days) {
-	char userInputchar = 'l';
-	string userInput;
-	cout << "Please select from one of the following" << endl << endl;
+
+	char userInput;
+	cout << "Please select from one of the following: " << endl << endl;
 	cout << "Enter A to add a Task" << endl;
-	cout << "Enter D to Delete a Task" << endl;
-	cout << "Enter P to Print your planner" << endl;
+	cout << "Enter D to Delete/Complete a Task" << endl;
+	cout << "Enter P to Print your planner for the week" << endl;
     cout << "Enter H for help using this program" << endl;
     cout << "Enter Q to quit" << endl<<endl;
     cout << "->";
     cin >> userInput;
-	userInputchar = toupper(userInput[0]);
+    userInput = toupper(userInput);
+
     
     //placeholder vaiables
     string DOW;
@@ -21,89 +22,93 @@ bool mainMenu(vector<Linked>& days) {
     string ST;
     string ET;
     string title;
+    int dayChoice;
+    Task temp;
 
-    switch (userInputchar) {
-    case 'A':
+    switch (userInput) {
+        case 'A':
 
-        cout << "You selected Add Task." << endl;
-        cout << "Please enter task Name/Title" << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, title);
+            cout << "You selected Add Task." << endl;
+            cout << "For which day would you like to add this task?\n" << endl;
+            cout << "(Enter the corresponding number to select that day):" << endl;
+            cout << "1.) Monday\n2.) Tuesday\n3.) Wednesday\n4.) Thursday\n5.) Friday\n6.) Saturday\n7.) Sunday" << endl;
+            cout << "-> "; cin >> dayChoice; cout << endl;
 
-        cout << "Please enter task discription" << endl;
-        getline(cin, description);
+            cout << "Please enter the task Name/Title: ";
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            getline(cin, title);
+            cout << endl;
 
-        cout << "Please enter the day of the week that you will complete the task" << endl;
-        getline(cin, DOW);
+            cout << "Please enter the task description: ";
+            getline(cin, description);
+            cout << endl;
 
-        cout << "Please enter start time of task (Enter in HH:MM format)" << endl;
-        getline(cin, ST);
-        cout << "Please enter End time of task (Enter in HH:MM format)" << endl;
-        getline(cin, ET);       
+            temp.setTaskName(title);
+            temp.setTaskDescription(description);
 
-        addTaskToList(days, DOW, title, description, ST, ET);
+            cout << "Would you like to add a due date for this task?(Enter Y for yes or N for no):  ";
+            char exChoice;
+            cin >> exChoice;
+            cout << endl;
+            if (toupper(exChoice ) == 'Y') {
+                cout << "Enter the due date (MM/DD/YYYY): ";
+                string date;
+                cin >> date;
+                stringstream inSS(date);
+                int m, d, y;
+                inSS >> m;
+                inSS.ignore(1);
+                inSS >> d;
+                inSS.ignore(1);
+                inSS >> y;
+                temp.setDueDate(m, d, y);
+                cout << "\nDue date for this task is set to " << date << ".\n" << endl;
+            }
 
-        return true;
-
-    case 'D':
-        cout << "You selected Delete Task." << endl;
-        cout << "Please enter the day that the task is in" << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, DOW);
-        cout << "Please enter task Name/Title to delete" << endl;
-        getline(cin, title);
-        deleteTask(days, DOW, title);
-        return true;
-
-    case 'P':
-        printItenerary(days);
-
-        return true;
-
-    case 'H':
-        Help();
-        return true;
-    case 'Q':
-        cout << "You choose to quit, Goodbye" << endl;
-        return false;
-
-    default:
-        cout << "Invalid choice." << endl;
-        return true;
+            cout << "Do you want to time block this task?(Enter Y for yes or N for no): ";
+            cin >> exChoice;
+            cout << endl;
+            if (toupper(exChoice) == 'Y') {
+                cout << "Please enter start time of task (Enter in HH:MM format)" << endl;
+                getline(cin, ST);
+                cout << "Please enter End time of task (Enter in HH:MM format)" << endl;
+                getline(cin, ET);
+            }
+            days.at(dayChoice - 1).addNode(temp);
+            cout << "The task \"" << title << "\" has been added.\n" << endl;
+            days.at(dayChoice - 1).printList(dayChoice);
+            return true;
+        case 'D':
+            cout << "(Enter the corresponding number to select that day):" << endl;
+            cout << "1.) Monday\n2.) Tuesday\n3.) Wednesday\n4.) Thursday\n5.) Friday\n6.) Saturday\n7.) Sunday" << endl;
+            cout << "Please choose a day: "; cin >> dayChoice;
+            if(days.at(dayChoice-1).isEmpty())
+                cout << "\nUNABLE TO PROCESS COMMAND: There are no tasks set for this day." << endl;
+            else{
+                days.at(dayChoice-1).printList(dayChoice);
+                cout << "Enter the title of the task you would like to delete: ";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                getline(cin, title);
+                days.at(dayChoice-1).delNode(title);
+            }
+            return true;
+        case 'H':
+            Help();
+            return true;
+        case 'P':
+            //printItinerary();
+            return true;
+        default:
+            return false;
     }
-
-
-
 }
-void addTaskToList(vector<Linked>& days, string DOW, string title, string description, string ST, string ET) {
-    /*pre: dow(Day of week), title, description, ST(start time), ET(end time) are all passed and
-    post:this simply makes a instance of the taskclass class and adds it to the list. it also might check to see if there are overlapping events
-    */
-    Task newTask = Task(title, description, ST, ET, 0);
-    days.at(dayToIterator(DOW)).addNode(newTask);
-    return;
 
-}
-void deleteTask(vector<Linked>& days, string DOW, string title) {
-    /*
-    Pre: task title is passed
-    post: deletes task from one of the given linked lists
-    */
-    days.at(dayToIterator(DOW)).delNode(title);
-    int x = 0;
-    return;
-}
-void printItenerary(vector<Linked>& days) {
-    /*
-    Pre:not entirely sure up to who write the function as to how they get the lists to the function
-    Post: write a well formatted week itenerary to a designated outfile
-    */
-    int x = 0;
-    return;
+void printItinerary(vector<Linked>& days) {
+
 
 }
 void Help() {
-    cout << "You have selected help" << endl;
+    cout << "\nYou have selected help" << endl;
     cout << "This is the week planner program" << endl<<endl;
     cout << "To use this program you can add tasks for your week. " << endl;
     cout << "To add tasks select A in the main menu and fill out the start time, end time " << endl;
@@ -112,6 +117,13 @@ void Help() {
     cout << "and entering the title of the task. " << endl<<endl;
     cout << "Once you are done press P on the main menu and it will create a txt " << endl;
     cout << "file that you can print off" << endl<<endl<<endl;
+}
+
+string upper(string str){
+    for(int i = 0; i < str.size(); i++) {
+        str.at(i) = toupper(str.at(i));
+    }
+    return str;
 }
 
 int dayToIterator(string DOW) {
@@ -133,8 +145,7 @@ int dayToIterator(string DOW) {
         else
             return 6;
     default:
-        cout << "Invalid day. Please enter a day of the week" << endl;
-        cin >> DOW;
-        return dayToIterator(DOW);
+        cout << "Invalid Day";
+        return -1;
     }
 }
