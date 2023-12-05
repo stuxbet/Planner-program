@@ -4,6 +4,7 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -22,6 +23,8 @@ public:
     void setTaskName(string);
     void setTaskDescription(string);
     void setDueDate(int, int, int);
+    void setStartTime(string);
+    void setEndTime(string);
     void completeTask();
     string getTaskName() {return taskName;}
     string getTaskDescription() {return taskDescription;}

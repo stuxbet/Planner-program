@@ -23,6 +23,7 @@ void Linked::delNode(string name) {
         delete tempNode;
         tempNode = nullptr;
         found = true;
+        cout << "\nThe task \"" << name << "\" has been deleted/completed\n" << endl;
     }
     else{
         while(tempNode != nullptr && tempNode->nextPtr!=nullptr){
@@ -34,13 +35,12 @@ void Linked::delNode(string name) {
                 delete delNode;
                 delNode = nullptr;
                 found = true;
+                cout << "\nThe task \"" << name << "\" has been deleted/completed\n" << endl;
             }
             tempNode = tempNode->nextPtr;
         }
         if (!found)
             cout << "\nCOMMAND FAILED: The task \"" << name << "\" was not found within your tasks for this day." << endl;
-        else
-            cout << "\nThe task \"" << name << "\" has been deleted/completed\n" << endl;
     }
 
 }
@@ -90,7 +90,8 @@ void Linked::printList(int day) {
         cout << setw(5) << left << "|  " << setw(5) << left << "TASK DESCRIPTION: "<< setw(42) << left << tempNode->task.getTaskDescription() << setw(22) << right << "|" << endl;
         cout << "|-------------------------------------------------------------------------------------|" << endl;
         if(tempNode->task.getStartTime() != "00:00"){
-            cout << setw(5) << left << "| " << setw(5) << left << "TIME BLOCK: " << setw(70) << right << "|" << endl;
+            cout << setw(5) << left << "| " << setw(5) << left << "TIME BLOCK: " << setw(5) << left << tempNode->task.getStartTime() << setw(3) << left << " - "
+            << setw(5) << left << tempNode->task.getEndTime() << setw(57) << right << "|" << endl;
             cout << "|-------------------------------------------------------------------------------------|" << endl;
         }
         if(tempNode->task.getDueDate().tm_year != 0){
@@ -108,3 +109,4 @@ void Linked::printList(int day) {
         tempNode = tempNode->nextPtr;
     }
 }
+

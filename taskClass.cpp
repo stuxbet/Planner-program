@@ -63,3 +63,12 @@ double Task::getTimeRemaining(){
     return timeLeft;
 }
 
+void Task::setStartTime(string time) {
+    startTime = time;
+    //intStartTime = timeToIntTime(time);
+}
+
+void Task::setEndTime(string time) {
+    endTime = time;
+    //intEndTime = timeToIntTime(time);
+}

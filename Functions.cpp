@@ -63,17 +63,19 @@ bool mainMenu(vector<Linked>& days) {
                 inSS.ignore(1);
                 inSS >> y;
                 temp.setDueDate(m, d, y);
-                cout << "\nDue date for this task is set to " << date << ".\n" << endl;
+                cout << "\nDue date for the task \"" << title << "\" is set to " << date << ".\n" << endl;
             }
 
             cout << "Do you want to time block this task?(Enter Y for yes or N for no): ";
             cin >> exChoice;
             cout << endl;
             if (toupper(exChoice) == 'Y') {
-                cout << "Please enter start time of task (Enter in HH:MM format)" << endl;
+                cout << "Please enter start time of task (Enter in HH:MM format): ";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, ST);
-                cout << "Please enter End time of task (Enter in HH:MM format)" << endl;
+                cout << "\nPlease enter End time of task (Enter in HH:MM format): ";
                 getline(cin, ET);
+                cout << endl;
             }
             days.at(dayChoice - 1).addNode(temp);
             cout << "The task \"" << title << "\" has been added.\n" << endl;
@@ -114,8 +116,16 @@ bool mainMenu(vector<Linked>& days) {
 }
 
 void printItinerary(vector<Linked>& days) {
-
-
+vector<string> dayWords = {"MONDAY","TUESDAY","WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
+    for(int i = 0; i < days.size(); i++){
+        cout << "++++++++++++++++++++++++++++++++++++++++ " << dayWords.at(i) << " ++++++++++++++++++++++++++++++++++++++++\n" << endl;
+        if(days.at(i).isEmpty())
+            cout << "There are no active tasks for this day" << endl;
+        else{
+            days.at(i).printList(i+1);
+        }
+    }
+    cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n" << endl;
 }
 void Help() {
     cout << "\nYou have selected help" << endl;
