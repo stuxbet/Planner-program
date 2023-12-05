@@ -130,7 +130,10 @@
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="linkedList.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="taskClass.cpp" />
+    <ClCompile Include="taskClass.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DisableSpecificWarnings>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Functions.h" />

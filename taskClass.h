@@ -6,14 +6,15 @@
 #include <iomanip>
 #include <sstream>
 #include <vector>
+#include <time.h> 
 
 using namespace std;
 
-class Task{
+class Task {
 private:
     string taskName;
     string taskDescription;
-    tm dueDate;
+    struct tm dueDate;
     string startTime;
     string endTime;
     int intStartTime;
@@ -39,5 +40,6 @@ public:
     bool getStatus() { return isCompleted; }
 };
 
-bool conflicting(Task& t1, int st1, int et1);
+bool conflicting(Task t1, int st1, int et1);
 int timeToIntTime(string time);
+string intTimeToTime(int time);

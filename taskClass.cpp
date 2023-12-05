@@ -41,7 +41,7 @@ void Task::setEndTime(string time) {
 void Task::setDueDate(int day, int mon, int year) {
 
     time_t curr;
-    this->dueDate = *localtime(&curr);
+    localtime_s(&this->dueDate, &curr);
     this->dueDate.tm_year = year;
     this->dueDate.tm_mon = mon;
     this->dueDate.tm_mday = day;
@@ -64,8 +64,8 @@ double Task::getTimeRemaining() {
     tm tA, tB;
     time(&timeA);
     time(&timeB);
-    tA = *localtime(&timeA);
-    tB = *localtime(&timeB);
+    localtime_s(&tA, &timeA);
+    localtime_s(&tB, &timeB);
 
     tA.tm_mday = dueDate.tm_mday;
     tA.tm_mon = dueDate.tm_mon - 1;
@@ -81,7 +81,7 @@ double Task::getTimeRemaining() {
     return timeLeft;
 }
 
-bool conflicting(Task& t1, int st1, int et1) {
+bool conflicting(Task t1, int st1, int et1) {
     int st2 = t1.getIntStartTime();
     int et2 = t1.getIntEndTime();
     if (st1 >= et2 || st2 >= et1)
@@ -104,3 +104,14 @@ int timeToIntTime(string time) { // Takes in a string 'time' and outputs the tot
     return hours * 60 + minutes;
 }
 
+string intTimeToTime(int time) {
+    int hours, minutes;
+    string sTime;
+    hours = time / 60;
+    minutes = time % 60;
+    sTime = to_string(hours) + ':';
+    if (minutes < 10)
+        sTime += '0';
+    sTime += to_string(minutes);
+    return sTime;
+}

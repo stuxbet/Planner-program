@@ -19,4 +19,4 @@ public:
     void printList(int day);
     bool isEmpty();
 };
-    string upper(string str);
+string upper(string str);
