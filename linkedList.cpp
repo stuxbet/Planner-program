@@ -1,5 +1,4 @@
 #include "linkedList.h"
-#include "Functions.h"
 
 void Linked::addNode(Task t) {
     Node* tempNode = new Node;
@@ -17,34 +16,44 @@ void Linked::addNode(Task t) {
 void Linked::delNode(string name) {
     Node* tempNode = headPtr;
     Node* delNode;
-    bool found = false;
     if (tempNode != nullptr && upper(tempNode->task.getTaskName()) == upper(name)){
         headPtr = headPtr->nextPtr;
         delete tempNode;
         tempNode = nullptr;
-        found = true;
     }
     else{
         while(tempNode != nullptr && tempNode->nextPtr!=nullptr){
-            if (upper(tempNode->nextPtr->task.getTaskName()) == upper(name)){
+            if (tempNode->nextPtr->task.getTaskName() == name){
                 delNode = tempNode->nextPtr;
                 tempNode->nextPtr = tempNode->nextPtr->nextPtr;
                 if (tempNode->nextPtr == tailPtr )
                     tailPtr = tempNode;
                 delete delNode;
                 delNode = nullptr;
-                found = true;
             }
             tempNode = tempNode->nextPtr;
         }
-        if (!found)
-            cout << "\nCOMMAND FAILED: The task \"" << name << "\" was not found within your tasks for this day." << endl;
-        else
-            cout << "\nThe task \"" << name << "\" has been deleted/completed\n" << endl;
     }
-
 }
+void Linked::taskConflict(int st, int et) {
+    Node* tempNode = headPtr;
+    bool cf = 0;
+    if (tempNode != nullptr && conflicting(tempNode->task, st, et)) {
+        cout << "These tasks are conflicting";
+    }
+    else {
+        while (tempNode != nullptr && tempNode->nextPtr != nullptr) {
+            if (!conflicting(t, tempNode->nextPtr->task)) {
+                tempNode->nextPtr = tempNode->nextPtr->nextPtr;
+                if (tempNode->nextPtr == tailPtr)
+                    tailPtr = tempNode;
+            }
+            else {
 
+            }
+        }
+    }
+}
 bool Linked::isEmpty(){
     if(headPtr == nullptr)
         return true;
@@ -104,7 +113,13 @@ void Linked::printList(int day) {
             cout << "|-------------------------------------------------------------------------------------|" << endl;
         }
         cout << endl;
-        num++;
         tempNode = tempNode->nextPtr;
     }
+}
+
+string upper(string str) {
+    for (int i = 0; i < str.size(); i++) {
+        str.at(i) = toupper(str.at(i));
+    }
+    return str;
 }
