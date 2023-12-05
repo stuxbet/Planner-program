@@ -77,6 +77,8 @@ bool mainMenu(vector<Linked>& days) {
                 getline(cin, ET);
                 cout << endl;
             }
+            temp.setStartTime(ST);
+            temp.setEndTime(ET);
             days.at(dayChoice - 1).addNode(temp);
             cout << "The task \"" << title << "\" has been added.\n" << endl;
             days.at(dayChoice - 1).printList(dayChoice);
@@ -108,7 +110,7 @@ bool mainMenu(vector<Linked>& days) {
             Help();
             return true;
         case 'P':
-            //printItinerary();
+            printItinerary(days);
             return true;
         default:
             return false;
@@ -120,12 +122,12 @@ vector<string> dayWords = {"MONDAY","TUESDAY","WEDNESDAY", "THURSDAY", "FRIDAY",
     for(int i = 0; i < days.size(); i++){
         cout << "++++++++++++++++++++++++++++++++++++++++ " << dayWords.at(i) << " ++++++++++++++++++++++++++++++++++++++++\n" << endl;
         if(days.at(i).isEmpty())
-            cout << "There are no active tasks for this day" << endl;
+            cout << "There are no tasks active for today." << endl;
         else{
             days.at(i).printList(i+1);
         }
+        cout << "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n" << endl;
     }
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n" << endl;
 }
 void Help() {
     cout << "\nYou have selected help" << endl;

@@ -32,7 +32,4 @@ public:
     tm getDueDate() { return dueDate;}
     string getStartTime() { return startTime; }
     string getEndTime() { return endTime; }
-    int getIntStartTime() { return intStartTime; }
-    int getIntEndTime() { return intEndTime; }
-    bool getStatus() {return isCompleted;}
 };

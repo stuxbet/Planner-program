@@ -14,6 +14,7 @@ private:
     Node* headPtr;
     Node* tailPtr;
 public:
+    Linked();
     void addNode(Task t);
     void delNode(string name);
     void printList(int day);

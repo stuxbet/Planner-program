@@ -1,6 +1,11 @@
 #include "linkedList.h"
 #include "Functions.h"
 
+Linked::Linked() {
+    headPtr = nullptr;
+    tailPtr = nullptr;
+}
+
 void Linked::addNode(Task t) {
     Node* tempNode = new Node;
     tempNode->task = t;
@@ -109,4 +114,3 @@ void Linked::printList(int day) {
         tempNode = tempNode->nextPtr;
     }
 }
-

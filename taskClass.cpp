@@ -65,10 +65,10 @@ double Task::getTimeRemaining(){
 
 void Task::setStartTime(string time) {
     startTime = time;
-    //intStartTime = timeToIntTime(time);
+    intStartTime = timeToIntTime(time);
 }
 
 void Task::setEndTime(string time) {
     endTime = time;
-    //intEndTime = timeToIntTime(time);
+    intEndTime = timeToIntTime(time);
 }
