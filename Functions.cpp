@@ -3,8 +3,9 @@
 using namespace std;
 
 bool mainMenu(vector<Linked>& days) {
-
+    string s;
 	char userInput;
+    cout << endl;
 	cout << "Please select from one of the following: " << endl << endl;
 	cout << "Enter A to add a Task" << endl;
     cout << "Enter V to view your tasks by day" << endl;
@@ -12,9 +13,13 @@ bool mainMenu(vector<Linked>& days) {
 	cout << "Enter P to Print your planner for the week" << endl;
     cout << "Enter H for help using this program" << endl;
     cout << "Enter Q to quit" << endl<<endl;
-    cout << "->";
-    cin >> userInput;
-    userInput = toupper(userInput);
+    cout << "-> ";
+    cin >> s;
+    cout << endl;
+    if (isalpha(s.at(0)))
+        userInput = toupper(s.at(0));
+    else
+        userInput = 'z';
 
     
     //placeholder variables
@@ -25,6 +30,7 @@ bool mainMenu(vector<Linked>& days) {
     string title;
     int dayChoice;
     Task temp;
+    bool valid;
 
     switch (userInput) {
         case 'A':
@@ -33,7 +39,24 @@ bool mainMenu(vector<Linked>& days) {
             cout << "For which day would you like to add this task?\n" << endl;
             cout << "(Enter the corresponding number to select that day):" << endl;
             cout << "1.) Monday\n2.) Tuesday\n3.) Wednesday\n4.) Thursday\n5.) Friday\n6.) Saturday\n7.) Sunday" << endl;
-            cout << "-> "; cin >> dayChoice; cout << endl;
+            cout << "-> "; 
+            valid = false;
+            do {
+                cin >> dayChoice; cout << endl;
+                if (cin.good() && dayChoice > 0 && dayChoice < 8)
+                {
+                    //everything went well, we'll get out of the loop and return the value
+                    valid = true;
+                }
+                else
+                {
+                    //something went wrong, we reset the buffer's state to good
+                    cin.clear();
+                    //and empty it
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Invalid choice, please try again: ";
+                }
+            } while (!valid);
 
             cout << "Please enter the task Name/Title: ";
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -52,16 +75,19 @@ bool mainMenu(vector<Linked>& days) {
             cin >> exChoice;
             cout << endl;
             if (toupper(exChoice ) == 'Y') {
-                cout << "Enter the due date (MM/DD/YYYY): ";
                 string date;
-                cin >> date;
                 stringstream inSS(date);
                 int m, d, y;
+                valid = false;
+                cout << "Enter the due date (MM/DD/YYYY): ";
+                cin >> date;
                 inSS >> m;
                 inSS.ignore(1);
                 inSS >> d;
                 inSS.ignore(1);
                 inSS >> y;
+                if (inSS.good())
+                    valid = true;
                 temp.setDueDate(m, d, y);
                 cout << "\nDue date for the task \"" << title << "\" is set to " << date << ".\n" << endl;
             }
@@ -76,9 +102,15 @@ bool mainMenu(vector<Linked>& days) {
                 cout << "\nPlease enter End time of task (Enter in HH:MM format): ";
                 getline(cin, ET);
                 cout << endl;
+                int tST = timeToIntTime(ST);
+                int tET = timeToIntTime(ET);
+                if (days.at(dayChoice - 1).taskConflict(tST, tET)) {
+                    ST = intTimeToTime(tST);
+                    ET = intTimeToTime(tET);
+                    temp.setStartTime(ST);
+                    temp.setEndTime(ET);
+                }
             }
-            temp.setStartTime(ST);
-            temp.setEndTime(ET);
             days.at(dayChoice - 1).addNode(temp);
             cout << "The task \"" << title << "\" has been added.\n" << endl;
             days.at(dayChoice - 1).printList(dayChoice);
@@ -86,7 +118,25 @@ bool mainMenu(vector<Linked>& days) {
         case 'D':
             cout << "(Enter the corresponding number to select that day):" << endl;
             cout << "1.) Monday\n2.) Tuesday\n3.) Wednesday\n4.) Thursday\n5.) Friday\n6.) Saturday\n7.) Sunday" << endl;
-            cout << "Please choose a day: "; cin >> dayChoice;
+            cout << "Please choose a day: ";
+            valid = false;
+            do {
+                cin >> dayChoice; cout << endl;
+                if (cin.good() && dayChoice > 0 && dayChoice < 8)
+                {
+                    //everything went well, we'll get out of the loop and return the value
+                    valid = true;
+                }
+                else
+                {
+                    //something went wrong, we reset the buffer's state to good
+                    cin.clear();
+                    //and empty it
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Invalid choice, please try again: ";
+                }
+            } while (!valid);
+
             if(days.at(dayChoice-1).isEmpty())
                 cout << "\nUNABLE TO PROCESS COMMAND: There are no tasks set for this day." << endl;
             else{
@@ -100,7 +150,25 @@ bool mainMenu(vector<Linked>& days) {
         case 'V':
             cout << "(Enter the corresponding number to select that day):" << endl;
             cout << "1.) Monday\n2.) Tuesday\n3.) Wednesday\n4.) Thursday\n5.) Friday\n6.) Saturday\n7.) Sunday" << endl;
-            cout << "Please choose a day: "; cin >> dayChoice;
+            cout << "Please choose a day: ";
+            valid = false;
+            do {
+                cin >> dayChoice; cout << endl;
+                if (cin.good() && dayChoice > 0 && dayChoice < 8)
+                {
+                    //everything went well, we'll get out of the loop and return the value
+                    valid = true;
+                }
+                else
+                {
+                    //something went wrong, we reset the buffer's state to good
+                    cin.clear();
+                    //and empty it
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Invalid choice, please try again: ";
+                }
+            } while (!valid);
+
             if(days.at(dayChoice-1).isEmpty())
                 cout << "\nYou have no active tasks for the selected day." << endl;
             else
@@ -112,8 +180,12 @@ bool mainMenu(vector<Linked>& days) {
         case 'P':
             printItinerary(days);
             return true;
-        default:
+        case 'Q':
+            cout << "Thank you for using our program";
             return false;
+        default:
+            cout << "Invalid choice, please try again" << endl;
+            return true;
     }
 }
 

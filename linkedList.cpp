@@ -19,6 +19,7 @@ void Linked::addNode(Task t) {
         tailPtr = tempNode;
     }
 }
+
 void Linked::delNode(string name) {
     Node* tempNode = headPtr;
     Node* delNode;
@@ -48,6 +49,49 @@ void Linked::delNode(string name) {
             cout << "\nCOMMAND FAILED: The task \"" << name << "\" was not found within your tasks for this day." << endl;
     }
 
+}
+
+bool Linked::taskConflict(int& st, int& et) {
+    Node* tempNode = headPtr;
+    bool cf = false;
+    if (tempNode == nullptr);
+    else if (conflicting(tempNode->task, st, et)) {
+        cf = true;
+    }
+    else {
+        while (tempNode != nullptr) {
+            if (!conflicting(tempNode->task, st, et)) {
+                tempNode = tempNode->nextPtr;
+            }
+            else {
+                cf = true;
+                break;
+            }
+        }
+    }
+    if (cf) {
+        char c;
+        cout << "There are other tasks that conflict with the time slot that you just entered. Do you still wish to use this time block? (Y,N): ";
+        cin >> c;
+        if (toupper(c) == 'Y')
+            return true;
+        cout << "\nDo you want to use another time?: ";
+        cin >> c;
+        if (toupper(c) == 'N')
+            return false;
+        string ST, ET;
+        cout << "Please enter start time of task (Enter in HH:MM format) (conflicting time " << tempNode->task.getStartTime() << "): ";
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, ST);
+        cout << "\nPlease enter End time of task (Enter in HH:MM format) (conflicting time " << tempNode->task.getEndTime() << "): ";
+        getline(cin, ET);
+        cout << endl;
+        st = timeToIntTime(ST);
+        et = timeToIntTime(ET);
+        taskConflict(st, et);
+        return true;
+    }
+    return true;
 }
 
 bool Linked::isEmpty(){
@@ -106,7 +150,7 @@ void Linked::printList(int day) {
                 cout << setw(2) << left << time / 60 / 60 / 24 << " days" << setw(49) << right << "|" << endl;
             }
             else
-                cout << "< " << time / 60 / 60  << setw(4) << left << " hours" << setw(46) << right << "|" << endl;
+                cout << "< " << time / 60 / 60  << setw(4) << left << " hours" << setw(47) << right << "|" << endl;
             cout << "|-------------------------------------------------------------------------------------|" << endl;
         }
         cout << endl;
