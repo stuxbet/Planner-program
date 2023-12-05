@@ -72,7 +72,10 @@ bool mainMenu(vector<Linked>& days) {
             getline(cin, ST);
             cout << "Please enter End time of task (Enter in HH:MM format)" << endl;
             getline(cin, ET);
-            days.at(dayChoice - 1).taskConflict(timeToIntTime(ST), timeToIntTime(ET));
+            int tST = timeToIntTime(ST);
+            int tET = timeToIntTime(ET);
+            if (days.at(dayChoice - 1).taskConflict(tST, tET))
+                ;
         }
         days.at(dayChoice - 1).addNode(temp);
         cout << "The task \"" << title << "\" has been added.\n" << endl;

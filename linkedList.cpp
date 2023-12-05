@@ -1,5 +1,15 @@
 #include "linkedList.h"
 
+Linked::Linked() {
+    headPtr = nullptr;
+    tailPtr = nullptr;
+}
+Linked::Linked(Task t) {
+    Node* tempPtr = new Node;
+    tempPtr->task = t;
+    tempPtr->nextPtr = nullptr;
+}
+
 void Linked::addNode(Task t) {
     Node* tempNode = new Node;
     tempNode->task = t;
@@ -35,25 +45,36 @@ void Linked::delNode(string name) {
         }
     }
 }
-void Linked::taskConflict(int st, int et) {
+bool Linked::taskConflict(int& st, int& et) {
     Node* tempNode = headPtr;
-    bool cf = 0;
+    bool cf = false;
     if (tempNode != nullptr && conflicting(tempNode->task, st, et)) {
-        cout << "These tasks are conflicting";
+        cf = true;
     }
     else {
         while (tempNode != nullptr && tempNode->nextPtr != nullptr) {
-            if (!conflicting(t, tempNode->nextPtr->task)) {
-                tempNode->nextPtr = tempNode->nextPtr->nextPtr;
-                if (tempNode->nextPtr == tailPtr)
-                    tailPtr = tempNode;
+            if (!conflicting(tempNode->task, st, et)) {
+                tempNode = tempNode->nextPtr;
             }
             else {
-
+                cf = true;
+                break;
             }
         }
     }
+    if (cf) {
+        char c;
+        cout << "There are other tasks that conflict with the time slot that you just entered. Do you still wish to use this time block? (Y,N)" << endl;
+        cin >> c;
+        if (toupper(c) == 'Y')
+            return false;
+        cout << "Do you wish to put in a new time block?" << endl;
+        cin >> c;
+        if (toupper(c) == 'N')
+            return true;
+    }
 }
+
 bool Linked::isEmpty(){
     if(headPtr == nullptr)
         return true;

@@ -81,11 +81,9 @@ double Task::getTimeRemaining() {
     return timeLeft;
 }
 
-bool conflicting(Task& t1, Task& t2) {
-    int st1 = t1.getIntStartTime();
-    int et1 = t1.getIntEndTime();
-    int st2 = t2.getIntStartTime();
-    int et2 = t2.getIntEndTime();
+bool conflicting(Task& t1, int st1, int et1) {
+    int st2 = t1.getIntStartTime();
+    int et2 = t1.getIntEndTime();
     if (st1 >= et2 || st2 >= et1)
         return false;
     if (et1 <= st2 || et2 <= st1)

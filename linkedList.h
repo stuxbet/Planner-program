@@ -11,9 +11,11 @@ private:
     Node* headPtr;
     Node* tailPtr;
 public:
+    Linked();
+    Linked(Task t);
     void addNode(Task t);
     void delNode(string name);
-    void taskConflict(int st, int et);
+    bool taskConflict(int& st, int& et);
     void printList(int day);
     bool isEmpty();
 };

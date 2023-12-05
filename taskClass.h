@@ -39,5 +39,5 @@ public:
     bool getStatus() { return isCompleted; }
 };
 
-bool conflicting(Task& t1, Task& t2);
+bool conflicting(Task& t1, int st1, int et1);
 int timeToIntTime(string time);
