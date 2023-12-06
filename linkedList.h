@@ -1,5 +1,8 @@
 #pragma once
+#include <string>
+#include <iostream>
 #include "taskClass.h"
+using namespace std;
 
 struct Node {
     Task task;
@@ -12,11 +15,10 @@ private:
     Node* tailPtr;
 public:
     Linked();
-    Linked(Task t);
     void addNode(Task t);
     void delNode(string name);
-    bool taskConflict(int& st, int& et);
     void printList(int day);
+    void saveList(ostream&);
+    int getSize();
     bool isEmpty();
 };
-string upper(string str);
